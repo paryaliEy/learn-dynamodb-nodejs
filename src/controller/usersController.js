@@ -9,12 +9,33 @@ async function getAllUsers(req, res) {
       message: "Users retrieved successfully",
     });
   } catch (error) {
+    console.log("Error retrieving users:", error);
     res.status(500).json({
       error: error.message,
+      e: error,
       status: false,
       message: "Failed to retrieve users",
     });
   }
 }
 
-export default { getAllUsers };
+async function createUser(req, res) {
+  // Implementation for creating a user
+  try {
+    const userData = req.body;
+    const newUser = await userService.createUser(userData);
+    res.status(201).json({
+      status: true,
+      data: newUser,
+      message: "User created successfully",
+    });
+  } catch (error) {
+    res.status(500).json({
+      error: error.message,
+      status: false,
+      message: "Failed to create user",
+    });
+  }
+}
+
+export default { getAllUsers, createUser };

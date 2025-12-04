@@ -1,22 +1,25 @@
 import { GetCommand, PutCommand, ScanCommand } from "@aws-sdk/lib-dynamodb";
 import { v4 as uuidv4 } from "uuid";
-import docClient from "../config/dynamodb.js";
+import { docClient } from "../config/dynamodb.js";
 // const uuidv4 = await import("uuid");
 
 const TABLE_NAME = process.env.DYNAMODB_TABLE_NAME;
 
 class UserService {
   // Create a new User
-  static async createUser(userData) {
+  async createUser(userData) {
     const item = {
-      id: uuidv4(),
+      employee_id: uuidv4(),
       ...userData,
       createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
     };
     const command = new PutCommand({
       TableName: TABLE_NAME,
       Item: item,
     });
+    await docClient.send(command);
+    return item;
   }
 
   async getUserById(userId) {
