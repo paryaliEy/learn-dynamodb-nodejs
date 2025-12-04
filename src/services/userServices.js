@@ -27,7 +27,7 @@ class UserService {
     // Implementation for retrieving a user by ID
     const command = new GetCommand({
       TableName: TABLE_NAME,
-      Key: { id: userId },
+      Key: { employee_id: userId },
     });
 
     const response = await docClient.send(command);

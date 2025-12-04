@@ -47,4 +47,29 @@ async function createUser(req, res) {
   }
 }
 
-export default { getAllUsers, createUser };
+// get user by id
+
+async function getUserById(req, res) {
+  try {
+    const userId = req.params.id;
+    const user = await userService.getUserById(userId);
+    if (!user) {
+      return res.status(404).json({
+        status: false,
+        message: "User not found",
+      });
+    }
+    res.status(200).json({
+      status: true,
+      data: user,
+      message: "User retrieved successfully",
+    });
+  } catch (error) {
+    res.status(500).json({
+      error: error.message,
+      status: false,
+      message: "Failed to retrieve user",
+    });
+  }
+}
+export default { getAllUsers, createUser, getUserById };
