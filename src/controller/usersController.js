@@ -1,3 +1,4 @@
+import EmployeeSchema from "../schema/Employees.js";
 import userService from "../services/userServices.js";
 
 async function getAllUsers(req, res) {
@@ -23,6 +24,14 @@ async function createUser(req, res) {
   // Implementation for creating a user
   try {
     const userData = req.body;
+    const validated = EmployeeSchema.safeParse(userData);
+    if (!validated.success) {
+      return res.status(400).json({
+        status: false,
+        message: "Validation failed",
+        errors: JSON.parse(validated.error.message),
+      });
+    }
     const newUser = await userService.createUser(userData);
     res.status(201).json({
       status: true,

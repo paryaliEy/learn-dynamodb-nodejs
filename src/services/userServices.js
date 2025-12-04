@@ -14,6 +14,7 @@ class UserService {
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
     };
+
     const command = new PutCommand({
       TableName: TABLE_NAME,
       Item: item,
