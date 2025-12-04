@@ -1,10 +1,7 @@
-const {
-  PutCommand,
-  GetCommand,
-  ScanCommand,
-} = require("@aws-sdk/lib-dynamodb");
-const { docClient } = require("../config/dynamodb");
-const { v4: uuidv4 } = require("uuid");
+import { GetCommand, PutCommand, ScanCommand } from "@aws-sdk/lib-dynamodb";
+import { v4 as uuidv4 } from "uuid";
+import docClient from "../config/dynamodb.js";
+// const uuidv4 = await import("uuid");
 
 const TABLE_NAME = process.env.DYNAMODB_TABLE_NAME;
 
@@ -74,3 +71,5 @@ class UserService {
     return true;
   }
 }
+
+export default new UserService();
