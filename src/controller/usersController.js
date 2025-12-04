@@ -48,7 +48,6 @@ async function createUser(req, res) {
 }
 
 // get user by id
-
 async function getUserById(req, res) {
   try {
     const userId = req.params.id;
@@ -72,4 +71,35 @@ async function getUserById(req, res) {
     });
   }
 }
-export default { getAllUsers, createUser, getUserById };
+
+// update user by id
+async function updateUser(req, res) {
+  try {
+    const userId = req.params.id;
+    const updateData = req.body;
+    const validated = EmployeeSchema.partial().safeParse(updateData);
+    if (!validated.success) {
+      return res.status(400).json({
+        status: false,
+        message: "Validation failed",
+        errors: JSON.parse(validated.error.message),
+      });
+    }
+    const updatedUser = await userService.updateUser(userId, updateData);
+    res.status(200).json({
+      status: true,
+      data: updatedUser,
+      message: "User updated successfully",
+    });
+  } catch (error) {
+    res.status(500).json({
+      error: error.message,
+      status: false,
+      message: "Failed to update user",
+    });
+  }
+}
+
+// delete user by id
+
+export default { getAllUsers, createUser, getUserById, updateUser };
