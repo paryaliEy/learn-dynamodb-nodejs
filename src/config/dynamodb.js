@@ -1,5 +1,5 @@
-const { DynamoDBClient } = require("@aws-sdk/client-dynamodb");
-const { DynamodbDocumentClient } = require("@aws-sdk/lib-dynamodb");
+import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
+import { DynamoDBDocumentClient } from "@aws-sdk/lib-dynamodb";
 
 const client = new DynamoDBClient({
   region: process.env.AWS_REGION || "us-east-1",
@@ -9,6 +9,14 @@ const client = new DynamoDBClient({
   },
 });
 
-const docClient = DynamodbDocumentClient.from(client);
+const docClient = DynamoDBDocumentClient.from(client, {
+  marshallOptions: {
+    removeUndefinedValues: true, // false by default
+    convertEmptyValues: false, // false by default
+  },
+  unmarshallOptions: {
+    wrapNumbers: false,
+  },
+});
 
-module.exports = { docClient, client };
+export default { docClient, client };
