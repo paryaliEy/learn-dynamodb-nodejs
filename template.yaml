@@ -2,6 +2,12 @@ AWSTemplateFormatVersion: '2010-09-09'
 Transform: AWS::Serverless-2016-10-31
 Description: Express.js API with DynamoDB
 
+Parameters:
+  TableName:
+    Type: String
+    Default: Employees
+    Description: Name of the existing DynamoDB table
+
 Globals:
   Function:
     Timeout: 30
@@ -12,7 +18,7 @@ Globals:
     Environment:
       Variables:
         NODE_ENV: production
-        DYNAMODB_TABLE_NAME: !Ref UsersTable
+        DYNAMODB_TABLE_NAME: !Ref TableName
 
 Resources:
   # DynamoDB Table

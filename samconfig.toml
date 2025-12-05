@@ -14,6 +14,9 @@ confirm_changeset = true
 resolve_s3 = true
 region = "us-east-1"
 parameter_overrides = []
+disable_rollback = false
+s3_prefix = "express-dynamodb-api"
+no_verify_ssl = true
 
 [default.sync.parameters]
 watch = true
