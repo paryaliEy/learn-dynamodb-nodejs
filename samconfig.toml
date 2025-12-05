@@ -17,10 +17,6 @@ region = "us-east-1"
 parameter_overrides = "TableName=\"Employees\""
 disable_rollback = false
 s3_prefix = "express-dynamodb-api"
-
-
-no_verify_ssl = true
-
 image_repositories = []
 
 [default.sync.parameters]
