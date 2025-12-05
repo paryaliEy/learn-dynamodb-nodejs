@@ -5,7 +5,10 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node src/index.js",
-    "dev": "nodemon src/index.js"
+    "dev": "nodemon src/index.js",
+    "sam:build": "sam build",
+    "sam:deploy": "sam build && sam deploy --guided",
+    "sam:logs": "sam logs -n ExpressDnoFunction --stack-name express-dno --tail"
   },
   "keywords": [],
   "author": "",
