@@ -101,5 +101,21 @@ async function updateUser(req, res) {
 }
 
 // delete user by id
+async function deleteUser(req, res) {
+  try {
+    const userId = req.params.id;
+    await userService.deleteUser(userId);
+    res.status(200).json({
+      status: true,
+      message: "User deleted successfully",
+    });
+  } catch (error) {
+    res.status(500).json({
+      error: error.message,
+      status: false,
+      message: "Failed to delete user",
+    });
+  }
+}
 
-export default { getAllUsers, createUser, getUserById, updateUser };
+export default { getAllUsers, createUser, getUserById, updateUser, deleteUser };

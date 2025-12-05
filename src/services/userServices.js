@@ -1,4 +1,9 @@
-import { GetCommand, PutCommand, ScanCommand } from "@aws-sdk/lib-dynamodb";
+import {
+  DeleteCommand,
+  GetCommand,
+  PutCommand,
+  ScanCommand,
+} from "@aws-sdk/lib-dynamodb";
 import { v4 as uuidv4 } from "uuid";
 import { docClient } from "../config/dynamodb.js";
 // const uuidv4 = await import("uuid");
@@ -69,7 +74,7 @@ class UserService {
     }
     const command = new DeleteCommand({
       TableName: TABLE_NAME,
-      Key: { id: userId },
+      Key: { employee_id: userId },
     });
     await docClient.send(command);
     return true;
