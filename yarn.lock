@@ -492,6 +492,11 @@
   resolved "https://registry.yarnpkg.com/@aws/lambda-invoke-store/-/lambda-invoke-store-0.2.2.tgz#b00f7d6aedfe832ef6c84488f3a422cce6a47efa"
   integrity sha512-C0NBLsIqzDIae8HFw9YIrIBsbc0xTiOtt7fAukGPnqQ/+zZNaq+4jhuccltK0QuWHBnNm/a6kLIRA6GFiM10eg==
 
+"@codegenie/serverless-express@^4.12.5":
+  version "4.17.0"
+  resolved "https://registry.yarnpkg.com/@codegenie/serverless-express/-/serverless-express-4.17.0.tgz#effe0e8bbb5ef86cab3eeb741b27013bbb3d8fb0"
+  integrity sha512-KebLJ34yHNWFoC9D+iF1Ft+6T8hj0mdylP9d2SFERNuVPOc6UqAvgxm9mY6r2V3wCJ+BPpG2vEHihpUtCT3dEg==
+
 "@smithy/abort-controller@^4.2.5":
   version "4.2.5"
   resolved "https://registry.yarnpkg.com/@smithy/abort-controller/-/abort-controller-4.2.5.tgz#3386e8fff5a8d05930996d891d06803f2b7e5e2c"
@@ -903,6 +908,13 @@
   integrity sha512-4aUIteuyxtBUhVdiQqcDhKFitwfd9hqoSDYY2KRXiWtgoWJ9Bmise+KfEPDiVHWeJepvF8xJO9/9+WDIciMFFw==
   dependencies:
     tslib "^2.6.2"
+
+"@vendia/serverless-express@^4.12.6":
+  version "4.12.6"
+  resolved "https://registry.yarnpkg.com/@vendia/serverless-express/-/serverless-express-4.12.6.tgz#332a3c3e2c07069dbb8d3e95d69b23de2fe6dec2"
+  integrity sha512-ePsIPk3VQwgm5nh/JGBtTKQs5ZOF7REjHxC+PKk/CHvhlKQkJuUU365uPOlxuLJhC+BAefDznDRReWxpnKjmYg==
+  dependencies:
+    "@codegenie/serverless-express" "^4.12.5"
 
 accepts@^2.0.0:
   version "2.0.0"
