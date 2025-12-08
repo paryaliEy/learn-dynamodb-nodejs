@@ -28,6 +28,25 @@ class UserService {
     return item;
   }
 
+  async bulkCreateUsers(usersData) {
+    const createdUsers = [];
+    for (const userData of usersData) {
+      const item = {
+        employee_id: uuidv4(),
+        ...userData,
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
+      };
+      const command = new PutCommand({
+        TableName: TABLE_NAME,
+        Item: item,
+      });
+      await docClient.send(command);
+      createdUsers.push(item);
+    }
+    return createdUsers;
+  }
+
   async getUserById(userId) {
     // Implementation for retrieving a user by ID
     const command = new GetCommand({
