@@ -13,8 +13,7 @@ const s3Client = new S3Client({
   //   },
 });
 
-const BUCKET_NAME =
-  "aws-sam-cli-managed-default-samclisourcebucket-ncjm3zi1w95i";
+const BUCKET_NAME = process.env.S3_BUCKET_NAME;
 
 class S3Service {
   // Add S3 related methods here
