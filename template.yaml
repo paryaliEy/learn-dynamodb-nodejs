@@ -18,8 +18,11 @@ Globals:
     Environment:
       Variables:
         NODE_ENV: production
-        DYNAMODB_TABLE_NAME: !Ref TableName
+        DYNAMODB_TABLE_NAME: !Ref UsersTable
         S3_BUCKET_NAME: !Ref FileStorageBucket
+  Api:
+    BinaryMediaTypes:
+      - "*~1*"
 
 Resources:
   # S3 Bucket
@@ -42,12 +45,12 @@ Resources:
   UsersTable:
     Type: AWS::DynamoDB::Table
     Properties:
-      TableName: !Sub ${AWS::StackName}-users
+      # TableName: !Sub ${AWS::StackName}-users
       AttributeDefinitions:
         - AttributeName: id
           AttributeType: S
       KeySchema:
-        - AttributeName: id
+        - AttributeName: employee_id
           KeyType: HASH
       BillingMode: PAY_PER_REQUEST
       StreamSpecification:
