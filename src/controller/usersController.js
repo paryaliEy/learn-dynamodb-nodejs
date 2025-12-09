@@ -1,5 +1,5 @@
 import moment from "moment";
-import * as XLSX from "xlsx-color";
+import * as XLSX from "xlsx";
 import EmployeeSchema from "../schema/Employees.js";
 import s3service from "../services/s3service.js";
 import userService from "../services/userServices.js";
