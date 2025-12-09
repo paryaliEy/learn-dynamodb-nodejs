@@ -88,6 +88,8 @@ Resources:
           - src/lambda.js
         External:
           - "@aws-sdk/*"
+          - "xlsx"
+          - "moment"
 
 Outputs:
   ApiUrl:
