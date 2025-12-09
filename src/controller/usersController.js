@@ -75,9 +75,13 @@ async function bulkUploadUsers(req, res) {
       `File uploaded: ${req.file.originalname} Size: ${req.file.size} bytes`
     );
     const workbook = XLSX.read(req.file.buffer, { type: "buffer" });
+    console.log("Excel file read successfully");
     const sheetName = workbook.SheetNames[0];
+    console.log(`Processing sheet: ${sheetName}`);
     const worksheet = workbook.Sheets[sheetName];
+    console.log("Worksheet extracted successfully");
     const data = XLSX.utils.sheet_to_json(worksheet);
+    console.log("Excel data parsed to JSON successfully");
 
     console.log(`Rows found in Excel: ${data.length}`);
 
