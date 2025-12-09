@@ -72,7 +72,8 @@ async function bulkUploadUsers(req, res) {
       });
     }
     console.log(
-      `File uploaded: ${req.file.originalname} Size: ${req.file.size} bytes`
+      `File uploaded: ${req.file.originalname} Size: ${req.file.size} bytes`,
+      ` Type: ${req.file.mimetype}`
     );
     const workbook = XLSX.read(req.file.buffer, { type: "buffer" });
     console.log("Excel file read successfully");
