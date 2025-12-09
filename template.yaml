@@ -1,4 +1,4 @@
-AWSTemplateFormatVersion: '2010-09-09'
+AWSTemplateFormatVersion: "2010-09-09"
 Transform: AWS::Serverless-2016-10-31
 Description: Express.js API with DynamoDB
 
@@ -19,8 +19,25 @@ Globals:
       Variables:
         NODE_ENV: production
         DYNAMODB_TABLE_NAME: !Ref TableName
+        S3_BUCKET_NAME: !Ref FileStorageBucket
 
 Resources:
+  # S3 Bucket
+  FileStorageBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: !Sub ${AWS::StackName}-file-storage
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: true
+        BlockPublicPolicy: true
+        IgnorePublicAcls: true
+        RestrictPublicBuckets: true
+      LifecycleConfiguration:
+        Rules:
+          - Id: DeleteOldFiles
+            Status: Enabled
+            ExpirationInDays: 7 # Auto delete after 7 days
+
   # DynamoDB Table
   UsersTable:
     Type: AWS::DynamoDB::Table
@@ -47,6 +64,8 @@ Resources:
       Policies:
         - DynamoDBCrudPolicy:
             TableName: !Ref UsersTable
+        - S3CrudPolicy:
+            BucketName: !Ref FileStorageBucket
       Events:
         ApiRoot:
           Type: Api
@@ -67,17 +86,21 @@ Resources:
         EntryPoints:
           - src/lambda.js
         External:
-          - '@aws-sdk/*'
+          - "@aws-sdk/*"
 
 Outputs:
   ApiUrl:
     Description: API Gateway endpoint URL
     Value: !Sub https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/
-  
+
   FunctionArn:
     Description: Lambda Function ARN
     Value: !GetAtt ExpressApiFunction.Arn
-  
+
   TableName:
     Description: DynamoDB Table Name
     Value: !Ref UsersTable
+
+  BucketName:
+    Description: S3 bucket for file storage
+    Value: !Ref FileStorageBucket

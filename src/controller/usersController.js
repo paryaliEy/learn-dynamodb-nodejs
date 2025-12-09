@@ -7,9 +7,10 @@ import path from "path";
 import fs from "fs";
 import { fileURLToPath } from "url";
 import { file } from "zod";
+import s3service from "../services/s3service.js";
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+// const __filename = fileURLToPath(import.meta.url);
+// const __dirname = path.dirname(__filename);
 
 function excelDateToJSDate(excelDate) {
   const date = new Date((excelDate - (25567 + 2)) * 86400 * 1000);
@@ -139,14 +140,22 @@ async function bulkUploadUsers(req, res) {
 
     //save file to server (optional)
     const fileName = `created_users_${Date.now()}.xlsx`;
-    const uploadsDir = path.join(__dirname, "../../uploads");
-    const filePath = path.join(uploadsDir, fileName);
-    fs.writeFileSync(filePath, outputBuffer);
-    console.log(req);
+    let downloadUrl;
+
+    const s3Key = await s3service.uploadFile(
+      outputBuffer,
+      fileName,
+      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+    );
+    downloadUrl = await s3service.getFileUrl(s3Key);
+    // const uploadsDir = path.join(__dirname, "../../uploads");
+    // const filePath = path.join(uploadsDir, fileName);
+    // fs.writeFileSync(filePath, outputBuffer);
+    // console.log(req);
     res.status(201).json({
       status: true,
       message: "Users bulk uploaded successfully",
-      downloadLink: ["http://", req.host, `/api/download/${fileName}`].join(""),
+      downloadLink: downloadUrl,
     });
   } catch (error) {
     res.status(500).json({
@@ -158,37 +167,37 @@ async function bulkUploadUsers(req, res) {
   }
 }
 
-async function downloadExcel(req, res) {
-  try {
-    const fileName = req.params.filename;
+// async function downloadExcel(req, res) {
+//   try {
+//     const fileName = req.params.filename;
 
-    if (fileName.includes("..") || fileName.includes("/")) {
-      return res.status(400).json({
-        status: false,
-        message: "Invalid file name",
-      });
-    }
+//     if (fileName.includes("..") || fileName.includes("/")) {
+//       return res.status(400).json({
+//         status: false,
+//         message: "Invalid file name",
+//       });
+//     }
 
-    const filePath = path.join(__dirname, "../../uploads", fileName);
+//     const filePath = path.join(__dirname, "../../uploads", fileName);
 
-    // Check if file exists
-    if (!fs.existsSync(filePath)) {
-      return res.status(404).json({
-        status: false,
-        message: "File not found",
-      });
-    }
+//     // Check if file exists
+//     if (!fs.existsSync(filePath)) {
+//       return res.status(404).json({
+//         status: false,
+//         message: "File not found",
+//       });
+//     }
 
-    res.download(filePath, fileName);
-  } catch (error) {
-    res.status(500).json({
-      error: error.message,
-      status: false,
-      message: "Failed to download file",
-    });
-  }
-  // Implementation for downloading the Excel file
-}
+//     res.download(filePath, fileName);
+//   } catch (error) {
+//     res.status(500).json({
+//       error: error.message,
+//       status: false,
+//       message: "Failed to download file",
+//     });
+//   }
+//   // Implementation for downloading the Excel file
+// }
 
 // get user by id
 async function getUserById(req, res) {
@@ -265,7 +274,7 @@ export default {
   getAllUsers,
   createUser,
   bulkUploadUsers,
-  downloadExcel,
+  // downloadExcel,
   getUserById,
   updateUser,
   deleteUser,

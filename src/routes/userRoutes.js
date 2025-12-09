@@ -27,7 +27,7 @@ router.post(
   usersController.bulkUploadUsers
 );
 
-router.get("/download/:filename", usersController.downloadExcel);
+// router.get("/download/:filename", usersController.downloadExcel);
 
 router.get("/users/:id", usersController.getUserById);
 router.put("/users/:id", usersController.updateUser);
