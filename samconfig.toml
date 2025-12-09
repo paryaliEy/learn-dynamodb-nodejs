@@ -13,7 +13,6 @@ parallel = true
 capabilities = "CAPABILITY_IAM"
 confirm_changeset = false
 resolve_s3 = true
-region = "us-east-1"
 parameter_overrides = "TableName=\"Employees\""
 disable_rollback = false
 s3_prefix = "express-dynamodb-api"
