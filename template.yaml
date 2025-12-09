@@ -82,8 +82,7 @@ Resources:
       BuildProperties:
         Minify: false
         Target: es2020
-        Format: esm
-        MainFields: module,main
+        Sourcemap: true
         EntryPoints:
           - src/lambda.js
         External:
