@@ -87,7 +87,7 @@ Resources:
           - src/lambda.js
         External:
           - "@aws-sdk/*"
-          - "xlsx"
+          # - "xlsx"
           - "moment"
 
 Outputs:
