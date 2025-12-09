@@ -82,15 +82,14 @@ Resources:
       BuildProperties:
         Minify: false
         Target: es2020
-        Format: cjs
-        SourceMap: false
-        # MainFields: module,main
+        Format: esm
+        MainFields: module,main
         EntryPoints:
           - src/lambda.js
         External:
           - "@aws-sdk/*"
-          # - "xlsx"
-          # - "moment"
+          - "xlsx"
+          - "moment"
 
 Outputs:
   ApiUrl:
