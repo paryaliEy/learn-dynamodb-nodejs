@@ -1,7 +1,7 @@
 import { id } from "zod/locales";
 import EmployeeSchema from "../schema/Employees.js";
 import userService from "../services/userServices.js";
-import XLSX from "xlsx";
+import * as XLSX from "xlsx";
 import moment from "moment";
 import path from "path";
 import fs from "fs";
