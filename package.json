@@ -8,7 +8,7 @@
     "dev": "nodemon src/index.js",
     "sam:build": "sam build",
     "sam:deploy": "sam build && sam deploy --guided",
-    "sam:logs": "sam logs -n ExpressDnoFunction --stack-name express-dno --tail"
+    "sam:logs": "sam logs -n ExpressDnoFunction --stack-name express-dynamodb-api --tail"
   },
   "keywords": [],
   "author": "",
