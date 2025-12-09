@@ -64,17 +64,23 @@ async function createUser(req, res) {
 // Bulk upload from excel
 async function bulkUploadUsers(req, res) {
   try {
+    console.log("Bulk upload request received");
     if (!req.file) {
       return res.status(400).json({
         status: false,
         message: "No file uploaded",
       });
     }
-
+    console.log(
+      `File uploaded: ${req.file.originalname} Size: ${req.file.size} bytes`
+    );
     const workbook = XLSX.read(req.file.buffer, { type: "buffer" });
     const sheetName = workbook.SheetNames[0];
     const worksheet = workbook.Sheets[sheetName];
     const data = XLSX.utils.sheet_to_json(worksheet);
+
+    console.log(`Rows found in Excel: ${data.length}`);
+
     if (!data || data.length === 0) {
       return res.status(400).json({
         status: false,
@@ -113,7 +119,9 @@ async function bulkUploadUsers(req, res) {
       });
     }
 
+    console.log("Starting bulk user creation");
     const createdUsers = await userService.bulkCreateUsers(usersData);
+    console.log(`Successfully created ${createdUsers.length} users`);
 
     const outputData = createdUsers.map((user) => ({
       "Employee ID": user.employee_id,
