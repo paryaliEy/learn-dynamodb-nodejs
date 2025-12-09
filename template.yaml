@@ -6,7 +6,7 @@ Parameters:
   TableName:
     Type: String
     Default: Employees
-    Description: Name of the existing DynamoDB table
+    Description: Name of the DynamoDB table to use
 
 Globals:
   Function:
@@ -45,9 +45,8 @@ Resources:
   UsersTable:
     Type: AWS::DynamoDB::Table
     Properties:
-      # TableName: !Sub ${AWS::StackName}-users
       AttributeDefinitions:
-        - AttributeName: id
+        - AttributeName: employee_id
           AttributeType: S
       KeySchema:
         - AttributeName: employee_id
